@@ -9,23 +9,35 @@
 </head>
 
 <body>
-    <div id="canvas"></div>
+    <canvas id="canvas"></canvas>
 </body>
 <script>
-    canvas.onclick = (e) => {
-        // 获取鼠标位置 在鼠标位置创建一个div
-        let div = document.createElement('div');
-        div.style.position = 'absolute';
-        div.style.top = e.clientY + 'px';
-        div.style.left = e.clientX + 'px';
-        div.style.border = '1px solid red';
-        div.style.width = '6px';
-        div.style.height = '6px';
-        div.style.margin = '-3px 0 0 -3px'
-        div.style.borderRadius = '50%'
-        div.style.backgroundColor = 'black'
-        canvas.appendChild(div);
+    var canvas = document.getElementById("canvas");
+    // 让canvas 高宽与页面一样
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+    //画线
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(0,0,0)";
+    ctx.strokeStyle = 'none'
 
+    let painting = false;
+
+    canvas.onmousedown = () => {
+        painting = true
+    }
+    canvas.onmousemove = (e) => {
+        if (painting === true) {
+            ctx.beginPath();
+            ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+        } else {
+            console.log('什么都不做');
+        }
+    }
+    canvas.onmouseup = () => {
+        painting = false
     }
 </script>
 
